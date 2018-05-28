@@ -122,7 +122,6 @@ public class Grid extends JPanel {
                 // reinit grid
 
                 int randomNumber = (int) ((Math.random() * 3) + 1);
-                System.out.println(randomNumber);
                 if (randomNumber == 2) {
                     this.grid[i][j] = randomNumber;
                     Vertex vertex = dijkstra.searchVertexFromCoordinates(i, j, dijkstra.getUnvisitedVertexes());

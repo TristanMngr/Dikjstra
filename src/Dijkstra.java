@@ -1,9 +1,11 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Dijkstra {
     private List<Vertex> visitedVertexes;
     private List<Vertex> unvisitedVertexes;
+    private List<List<Vertex>> listVisitedVertexes;
     private Vertex       currentVertex;
 
     private boolean run;
@@ -14,32 +16,27 @@ public class Dijkstra {
     public Dijkstra() {
         this.visitedVertexes = new ArrayList<>();
         this.unvisitedVertexes = new ArrayList<>();
+        this.listVisitedVertexes = new ArrayList<>();
     }
 
     public void run(Grid grid) {
         this.run = true;
+        
         while (!unvisitedVertexes.isEmpty()) {
-            this.currentVertex = this.searchVertexShortestPath(this.getUnvisitedVertexes());
-            if (grid.getGridValue(this.currentVertex.getPosI(), this.currentVertex.getPosJ()) != 2) {
-                grid.setGrid(this.currentVertex.getPosI(), this.currentVertex.getPosJ(), 4);
+            this.currentVertex = searchVertexShortestPath(unvisitedVertexes);
+            if (grid.getGridValue(currentVertex.getPosI(), currentVertex.getPosJ()) != 2) {
+                // 2 => red
+                // 4 => grey
+                grid.setGrid(currentVertex.getPosI(), currentVertex.getPosJ(), 4);
             }
-            System.out.println("currentvertex>");
-            System.out.println(this.currentVertex.getId());
-            System.out.println("currentvertex<");
-            List<Vertex> neighbourVertexes = this.currentVertex.searchNeighbourVertexes(this);
+
+            List<Vertex> neighbourVertexes = currentVertex.searchNeighbourVertexes(this);
 
             for (int neighbour = 0; neighbour < neighbourVertexes.size(); neighbour++) {
-                System.out.println("neighbour>");
-                System.out.println(neighbourVertexes.get(neighbour).getId());
-                System.out.println("neighbour<");
-                neighbourVertexes.get(neighbour).calculateNewShortestPath(this.currentVertex);
+                neighbourVertexes.get(neighbour).calculateNewShortestPath(currentVertex);
             }
 
-            this.swapUnvisitedToVisitedList(this.currentVertex);
-
-            System.out.println("size>");
-            System.out.println(this.unvisitedVertexes.size());
-            System.out.println("size<");
+            this.swapUnvisitedToVisitedList(currentVertex);
         }
 
         findPath(endVertex, grid);
@@ -55,6 +52,7 @@ public class Dijkstra {
     }
 
     public void findPath(Vertex previous, Grid grid) {
+        // 5 => pink
         grid.setGrid(previous.getPosI(), previous.getPosJ(), 5);
 
         if (previous.getId() == startVertex.getId()) {
@@ -79,6 +77,7 @@ public class Dijkstra {
         }
         return null;
     }
+
 
     public Vertex searchVertexShortestPath(List<Vertex> listVertexes) {
         int    shortestPath = 10000;

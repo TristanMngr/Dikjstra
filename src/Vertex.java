@@ -13,7 +13,6 @@ public class Vertex {
         this.posI = posI;
         this.posJ = posJ;
 
-
         this.id = id;
         this.shortestPath = 100000;
         this.weight = 1;
