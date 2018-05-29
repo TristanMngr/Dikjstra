@@ -1,5 +1,3 @@
-import javafx.scene.input.KeyCode;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -14,6 +12,7 @@ public class Grid extends JPanel {
     private Dijkstra dijkstra;
     private Color    randomColor[];
 
+
     /**
      * Constructor to init Listener
      */
@@ -26,6 +25,7 @@ public class Grid extends JPanel {
 
         this.dijkstra = new Dijkstra();
         initGrid(dijkstra);
+
 
         /**
          * Listener Mouse
@@ -55,6 +55,7 @@ public class Grid extends JPanel {
                 repaint();
             }
         });
+
 
         /**
          * Listener Key
@@ -117,6 +118,7 @@ public class Grid extends JPanel {
         repaint();
     }
 
+
     /**
      * method to generate the grid + the wall (with weight 100)
      */
@@ -168,7 +170,6 @@ public class Grid extends JPanel {
      *
      * @param g
      */
-
     public void paintComponent(Graphics g) {
         for (int i = 0; i < Main.NUMBER_CASE_HEIGH; i++) {
             for (int j = 0; j < Main.NUMBER_CASE_WIDTH; j++) {
@@ -204,7 +205,6 @@ public class Grid extends JPanel {
                     g.setColor(Color.DARK_GRAY);
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
-
 
                 int nbCase = 4;
 

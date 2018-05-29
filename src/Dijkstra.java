@@ -13,6 +13,7 @@ public class Dijkstra {
 
     private Vertex  endVertex;
     private Vertex  startVertex;
+    private boolean findPath;
 
     public Dijkstra() {
         this.visitedVertexes = new ArrayList<>();
@@ -70,6 +71,8 @@ public class Dijkstra {
                 }
             }
 
+            // on reload la listes des visited vertex à zero
+
             this.visitedVertexes = new ArrayList<>();
             k++;
         }
@@ -84,6 +87,7 @@ public class Dijkstra {
      * @param grid
      */
     public void findPath(Vertex previous, Grid grid) {
+
         if (previous.getId() == startVertex.getId()) {
             return;
         }
