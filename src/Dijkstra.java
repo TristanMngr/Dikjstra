@@ -14,7 +14,6 @@ public class Dijkstra {
     private boolean run;
     private Vertex  endVertex;
     private Vertex  startVertex;
-    private boolean findPath;
 
     public Dijkstra() {
         this.visitedVertexes = new ArrayList<>();
@@ -22,12 +21,12 @@ public class Dijkstra {
         this.workingPaths = new ArrayList<>();
     }
 
-    public void run(Grid grid) {
+    public void run(Grid grid, int nbPaths) {
         this.run = true;
         int k = 0;
 
 
-        while (k < 3) {
+        while (k < nbPaths) {
 
             copyUnvisitedVertexes = new ArrayList<>(unvisitedVertexes);
 
@@ -65,18 +64,8 @@ public class Dijkstra {
             for (Vertex vertexCopy : this.unvisitedVertexes) {
                 if (!vertexCopy.equals(startVertex)) {
                     vertexCopy.reinit();
-
-                    for (List<Vertex> list : this.workingPaths) {
-                        for (Vertex vertexTaken : list) {
-                            if (vertexCopy.getId() == vertexTaken.getId()) {
-                                vertexCopy.setWeight(100);
-                            }
-                        }
-                    }
                 }
             }
-
-            // on reload la listes des visited vertex à zero
 
             this.visitedVertexes = new ArrayList<>();
 
@@ -84,42 +73,21 @@ public class Dijkstra {
 
         }
 
-
-        if (this.findPath) {
-            System.out.println("chemin trouvé");
-            grid.setMessage("Chemin trouvé !");
-        } else {
-            System.out.println("fail");
-            grid.setMessage("Gros Fail !");
-        }
-
         this.paint(grid);
         this.run = false;
-    }
-
-    public boolean isPathTaken(Vertex vertex) {
-        for (List<Vertex> list : this.workingPaths) {
-            for (Vertex vertexTaken : list) {
-                if (vertexTaken.getId() == vertex.getId())
-                    return true;
-            }
-        }
-        return false;
     }
 
     public void printCurrentPrevious() {
         Collections.sort(this.visitedVertexes, Comparator.comparingInt(Vertex::getId));
         for (Vertex vertex : this.visitedVertexes) {
-            System.out.print("| current => " + vertex.getId() + " previous => " + vertex.getPreviousId() + " path => " + vertex.getShortestPath() + " weight => " + vertex.getWeight() + " ");
+            System.out.println("| current => " + vertex.getId() + " previous => " + vertex.getPreviousId() + " path => " + vertex.getShortestPath() + " weight => " + vertex.getWeight() + " ");
         }
-        System.out.println();
+        System.out.println("==================");
     }
 
 
     public void findPath(Vertex previous, Grid grid) {
-
         if (previous.getId() == startVertex.getId()) {
-            this.findPath = true;
             return;
         }
         for (int vertex = 0; vertex < visitedVertexes.size(); vertex++) {
@@ -161,6 +129,7 @@ public class Dijkstra {
         int    shortestPath = 10000;
         Vertex vertex       = listVertexes.get(0);
 
+        Collections.shuffle(listVertexes);
         for (int item = 0; item < listVertexes.size(); item++) {
             /*if (isPathTaken(listVertexes.get(item))) {
                 continue;
@@ -209,7 +178,6 @@ public class Dijkstra {
         this.unvisitedVertexes = new ArrayList<>();
         this.startVertex = null;
         this.endVertex = null;
-        this.findPath = false;
         this.currentVertex = null;
     }
 

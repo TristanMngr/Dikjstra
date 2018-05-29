@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Grid extends JPanel {
+    public int nbPaths = 3;
     public final static int MAX_NODES_START = 1;
     public final static int MAX_NODES       = 100;
     public final static int MAX_NODES_END   = 1;
@@ -82,7 +83,7 @@ public class Grid extends JPanel {
 
 
     public void runDjikstra(Dijkstra dijkstra) {
-        dijkstra.run(this);
+        dijkstra.run(this, nbPaths);
     }
 
 
@@ -109,7 +110,7 @@ public class Grid extends JPanel {
     }
 
     public void generateRandomGrid(Dijkstra dijkstra) {
-        dijkstra.reinitDijkstra();
+        dijkstra = new Dijkstra();
 
         int id = 1;
         for (int i = 0; i < Main.NUMBER_CASE_HEIGH; i++) {
@@ -163,13 +164,29 @@ public class Grid extends JPanel {
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
                 if (grid[i][j] == 3) {
-                    g.setColor(Color.blue);
+                    g.setColor(Color.BLUE);
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
                 if (grid[i][j] == 4) {
                     g.setColor(Color.DARK_GRAY);
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
+
+                /*for (int item = 0; item < nbPaths; item++) {
+                    int nbCase = 4;
+                    int redColor = 0;
+                    nbCase ++;
+                    redColor += 25;
+                    System.out.println(nbCase);
+                    System.out.println(redColor);
+
+                    Color color = new Color(redColor, 150, 150);
+                    if (grid[i][j] == nbCase) {
+                        g.setColor(color);
+                        g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
+                    }
+                }*/
+
                 if (grid[i][j] == 5) {
                     g.setColor(Color.PINK);
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
