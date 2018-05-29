@@ -33,22 +33,22 @@ public class Vertex {
 
         if (this.posJ + 1 <= Main.NUMBER_CASE_WIDTH - 1) {
             Vertex vertexRight = djikstra.searchVertexFromCoordinates(this.posI, this.posJ + 1, djikstra.getUnvisitedVertexes());
-            if (vertexRight != null)
+            if (vertexRight != null && !djikstra.isPathTaken(vertexRight))
                 vertexesList.add(vertexRight);
         }
         if (this.posJ - 1 >= 0) {
             Vertex vertexLeft = djikstra.searchVertexFromCoordinates(this.posI, this.posJ - 1, djikstra.getUnvisitedVertexes());
-            if (vertexLeft != null)
+            if (vertexLeft != null && !djikstra.isPathTaken(vertexLeft))
                 vertexesList.add(vertexLeft);
         }
         if (this.posI - 1 >= 0) {
             Vertex vertexUp = djikstra.searchVertexFromCoordinates(this.posI - 1, this.posJ, djikstra.getUnvisitedVertexes());
-            if (vertexUp != null)
+            if (vertexUp != null && !djikstra.isPathTaken(vertexUp))
                 vertexesList.add(vertexUp);
         }
         if (this.posI + 1 <= Main.NUMBER_CASE_HEIGH) {
             Vertex vertexDown = djikstra.searchVertexFromCoordinates(this.posI + 1, this.posJ, djikstra.getUnvisitedVertexes());
-            if (vertexDown != null)
+            if (vertexDown != null && !djikstra.isPathTaken(vertexDown))
                 vertexesList.add(vertexDown);
         }
 
@@ -85,5 +85,15 @@ public class Vertex {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void reinit() {
+        this.shortestPath = 100000;
+        this.weight = 1;
+        this.previousId = 0;
     }
 }

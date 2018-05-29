@@ -4,10 +4,10 @@ import java.awt.event.KeyEvent;
 
 public class Main {
     public final static int MENU_WIDTH        = 100;
-    public final static int NUMBER_CASE_HEIGH = 4;
-    public final static int NUMBER_CASE_WIDTH = 4;
-    public final static int GRID_HEIGH        = NUMBER_CASE_HEIGH * 100;
-    public final static int GRID_WIDTH        = NUMBER_CASE_WIDTH * 100;
+    public final static int NUMBER_CASE_HEIGH = 10;
+    public final static int NUMBER_CASE_WIDTH = 10;
+    public final static int GRID_HEIGH        = NUMBER_CASE_HEIGH * 60;
+    public final static int GRID_WIDTH        = NUMBER_CASE_WIDTH * 60;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Rectangle");

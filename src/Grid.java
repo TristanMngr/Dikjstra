@@ -147,6 +147,7 @@ public class Grid extends JPanel {
         return gridCase;
     }
 
+
     public void paintComponent(Graphics g) {
         for (int i = 0; i < Main.NUMBER_CASE_HEIGH; i++) {
             for (int j = 0; j < Main.NUMBER_CASE_WIDTH; j++) {
@@ -162,7 +163,7 @@ public class Grid extends JPanel {
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
                 if (grid[i][j] == 3) {
-                    g.setColor(Color.ORANGE);
+                    g.setColor(Color.blue);
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
                 if (grid[i][j] == 4) {
@@ -171,6 +172,21 @@ public class Grid extends JPanel {
                 }
                 if (grid[i][j] == 5) {
                     g.setColor(Color.PINK);
+                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
+                }
+
+                if (grid[i][j] == 6) {
+                    g.setColor(Color.ORANGE);
+                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
+                }
+
+                if (grid[i][j] == 7) {
+                    g.setColor(Color.YELLOW);
+                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
+                }
+
+                if (grid[i][j] == 8) {
+                    g.setColor(Color.MAGENTA);
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
 
