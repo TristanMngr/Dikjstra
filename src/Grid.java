@@ -1,10 +1,12 @@
+import javafx.scene.input.KeyCode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
 public class Grid extends JPanel {
-    public  int     nbPaths = 3;
+    public  int     nbPaths = Main.NB_PATHS;
     private int[][] grid    = new int[Main.NUMBER_CASE_HEIGH][Main.NUMBER_CASE_WIDTH];
     private String message;
     private int    keyCode;
@@ -74,7 +76,10 @@ public class Grid extends JPanel {
                     runDjikstra(dijkstra);
                 } else if (keyCode == KeyEvent.VK_G) {
                     generateRandomGrid();
+                } else if (keyCode == KeyEvent.VK_C) {
+                    randomColor = generateRandomColor();
                 }
+                
                 repaint();
             }
         });
