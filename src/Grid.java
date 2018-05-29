@@ -1,31 +1,37 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 public class Grid extends JPanel {
-    public int nbPaths = 3;
-    public final static int MAX_NODES_START = 1;
-    public final static int MAX_NODES       = 100;
-    public final static int MAX_NODES_END   = 1;
-
-
-    private int[][] grid = new int[Main.NUMBER_CASE_HEIGH][Main.NUMBER_CASE_WIDTH];
+    public final static int     MAX_NODES_START = 1;
+    public final static int     MAX_NODES       = 100;
+    public final static int     MAX_NODES_END   = 1;
+    public              int     nbPaths         = 3;
+    private             int[][] grid            = new int[Main.NUMBER_CASE_HEIGH][Main.NUMBER_CASE_WIDTH];
     private String message;
     private int    keyCode;
     private int    nodesStart, nodes, nodesEnd;
     private int sizeCaseHeigh, sizeCaseWidth;
     private Dijkstra dijkstra;
+    private Color randomColor[];
 
-
+    /**
+     * Constructor to init Listener
+     */
     public Grid() {
         this.sizeCaseHeigh = Main.GRID_HEIGH / Main.NUMBER_CASE_HEIGH;
         this.sizeCaseWidth = Main.GRID_WIDTH / Main.NUMBER_CASE_WIDTH;
+        this.randomColor = generateRandomColor();
 
         this.message = "A: start; Z: node; E: end; R: Reload; G: Generate";
 
         this.dijkstra = new Dijkstra();
         initGrid(dijkstra);
 
+        /**
+         * Listener Mouse
+         */
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -56,6 +62,9 @@ public class Grid extends JPanel {
             }
         });
 
+        /**
+         * Listener Key
+         */
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -72,7 +81,7 @@ public class Grid extends JPanel {
                 } else if (keyCode == KeyEvent.VK_S) {
                     runDjikstra(dijkstra);
                 } else if (keyCode == KeyEvent.VK_G) {
-                    generateRandomGrid(dijkstra);
+                    generateRandomGrid();
                 }
                 repaint();
             }
@@ -87,6 +96,10 @@ public class Grid extends JPanel {
     }
 
 
+    /**
+     *
+     * @param dijkstra
+     */
     public void initGrid(Dijkstra dijkstra) {
         dijkstra.reinitDijkstra();
 
@@ -101,15 +114,12 @@ public class Grid extends JPanel {
                 // reinit grid
 
                 this.grid[i][j] = 0;
-                this.nodesStart = 1;
-                this.nodes = 1;
-                this.nodesEnd = 1;
             }
         }
         repaint();
     }
 
-    public void generateRandomGrid(Dijkstra dijkstra) {
+    public void generateRandomGrid() {
         dijkstra = new Dijkstra();
 
         int id = 1;
@@ -155,63 +165,68 @@ public class Grid extends JPanel {
                 g.setColor(Color.BLACK);
                 g.drawRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
 
+                // GREY
+                if (grid[i][j] == 0) {
+                    g.setColor(new Color(240, 240, 240));
+                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
+                }
+
+                // GREEN
                 if (grid[i][j] == 1) {
-                    g.setColor(Color.GREEN);
+                    g.setColor(new Color(0, 100, 0));
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
+
+                // RED
                 if (grid[i][j] == 2) {
-                    g.setColor(Color.RED);
+                    g.setColor(new Color(170, 0, 0));
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
+
+                // BLUE
                 if (grid[i][j] == 3) {
-                    g.setColor(Color.BLUE);
+                    g.setColor(new Color(0, 100, 150));
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
+
+                // DARK GREY
                 if (grid[i][j] == 4) {
                     g.setColor(Color.DARK_GRAY);
                     g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
 
-                /*for (int item = 0; item < nbPaths; item++) {
-                    int nbCase = 4;
-                    int redColor = 0;
-                    nbCase ++;
-                    redColor += 25;
-                    System.out.println(nbCase);
-                    System.out.println(redColor);
 
-                    Color color = new Color(redColor, 150, 150);
+                int nbCase   = 4;
+
+                for (int item = 0; item < nbPaths; item++) {
+                    nbCase++;
+
                     if (grid[i][j] == nbCase) {
-                        g.setColor(color);
+                        g.setColor(randomColor[item]);
                         g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                     }
-                }*/
-
-                if (grid[i][j] == 5) {
-                    g.setColor(Color.PINK);
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
                 }
-
-                if (grid[i][j] == 6) {
-                    g.setColor(Color.ORANGE);
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
-                if (grid[i][j] == 7) {
-                    g.setColor(Color.YELLOW);
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
-                if (grid[i][j] == 8) {
-                    g.setColor(Color.MAGENTA);
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
                 g.setColor(Color.BLACK);
                 g.drawString(message, 25, 25);
             }
         }
     }
+
+
+    public Color[] generateRandomColor() {
+        Color[] colors = new Color[nbPaths];
+        for (int item = 0; item < nbPaths; item++) {
+            Random r     = new Random();
+            int    min   = 50;
+            int    max   = 250;
+            int    red   = r.nextInt(max - min) + min;
+            int    green = r.nextInt(max - min) + min;
+            int    blue  = r.nextInt(max - min) + min;
+            colors[item] = new Color(red, green, blue);
+        }
+        return colors;
+    }
+
 
     public void setGrid(int posI, int posJ, int caseProperty) {
         this.grid[posI][posJ] = caseProperty;

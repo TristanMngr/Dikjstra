@@ -59,10 +59,6 @@ public class Vertex {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getShortestPath() {
         return shortestPath;
     }

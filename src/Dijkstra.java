@@ -25,9 +25,7 @@ public class Dijkstra {
         this.run = true;
         int k = 0;
 
-
         while (k < nbPaths) {
-
             copyUnvisitedVertexes = new ArrayList<>(unvisitedVertexes);
 
             while (!unvisitedVertexes.isEmpty()) {
@@ -35,8 +33,6 @@ public class Dijkstra {
                 this.currentVertex = searchVertexShortestPath(unvisitedVertexes);
 
                 if (grid.getGridValue(currentVertex.getPosI(), currentVertex.getPosJ()) != 2) {
-                    // 2 => red
-                    // 4 => grey
                     grid.setGrid(currentVertex.getPosI(), currentVertex.getPosJ(), 4);
                 }
 
@@ -49,18 +45,20 @@ public class Dijkstra {
                 this.swapUnvisitedToVisitedList(currentVertex);
             }
 
-            System.out.println("Current/Previous :");
-            printCurrentPrevious();
+            //DEBUG
+            /*System.out.println("Current/Previous :");
+            printCurrentPrevious();*/
 
-
-            // on reinitialise les unvisitedNode
+            // reset unvisited node
             this.unvisitedVertexes = new ArrayList<>();
             this.unvisitedVertexes = copyUnvisitedVertexes;
 
+            // add workingPath found in workingPaths
             this.workingPath = new ArrayList<>();
             findPath(endVertex, grid);
             this.workingPaths.add(workingPath);
 
+            // reinit shortest path and previous node
             for (Vertex vertexCopy : this.unvisitedVertexes) {
                 if (!vertexCopy.equals(startVertex)) {
                     vertexCopy.reinit();
@@ -103,7 +101,7 @@ public class Dijkstra {
 
     public void paint(Grid grid) {
         int color = 5;
-        for (List<Vertex> list : this.workingPaths) {
+        for (List<Vertex> list : workingPaths) {
             for (Vertex vertex : list) {
                 grid.setGrid(vertex.getPosI(), vertex.getPosJ(), color);
             }
@@ -131,9 +129,6 @@ public class Dijkstra {
 
         Collections.shuffle(listVertexes);
         for (int item = 0; item < listVertexes.size(); item++) {
-            /*if (isPathTaken(listVertexes.get(item))) {
-                continue;
-            }*/
             if (listVertexes.get(item).getShortestPath() < shortestPath) {
                 vertex = listVertexes.get(item);
                 shortestPath = listVertexes.get(item).getShortestPath();
@@ -176,16 +171,18 @@ public class Dijkstra {
     public void reinitDijkstra() {
         this.visitedVertexes = new ArrayList<>();
         this.unvisitedVertexes = new ArrayList<>();
+        this.copyUnvisitedVertexes = new ArrayList<>();
+        this.workingPaths = new ArrayList<>();
+        this.workingPath = new ArrayList<>();
+
         this.startVertex = null;
         this.endVertex = null;
         this.currentVertex = null;
+
     }
 
     public void setStartVertex(Vertex startVertex) {
         this.startVertex = startVertex;
     }
 
-    public boolean isRun() {
-        return run;
-    }
 }
