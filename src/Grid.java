@@ -4,17 +4,13 @@ import java.awt.event.*;
 import java.util.Random;
 
 public class Grid extends JPanel {
-    public final static int     MAX_NODES_START = 1;
-    public final static int     MAX_NODES       = 100;
-    public final static int     MAX_NODES_END   = 1;
-    public              int     nbPaths         = 3;
-    private             int[][] grid            = new int[Main.NUMBER_CASE_HEIGH][Main.NUMBER_CASE_WIDTH];
+    public  int     nbPaths = 3;
+    private int[][] grid    = new int[Main.NUMBER_CASE_HEIGH][Main.NUMBER_CASE_WIDTH];
     private String message;
     private int    keyCode;
-    private int    nodesStart, nodes, nodesEnd;
-    private int sizeCaseHeigh, sizeCaseWidth;
+    private int    sizeCaseHeigh, sizeCaseWidth;
     private Dijkstra dijkstra;
-    private Color randomColor[];
+    private Color    randomColor[];
 
     /**
      * Constructor to init Listener
@@ -37,26 +33,22 @@ public class Grid extends JPanel {
             public void mousePressed(MouseEvent e) {
                 int    gridCase[] = getGridCase(e.getY(), e.getX());
                 Vertex vertex     = dijkstra.searchVertexFromCoordinates(gridCase[0], gridCase[1], dijkstra.getUnvisitedVertexes());
-                if (keyCode == KeyEvent.VK_A && nodesStart <= MAX_NODES_START) {
+                if (keyCode == KeyEvent.VK_A) {
                     grid[gridCase[0]][gridCase[1]] = 1;
 
                     dijkstra.setStartVertex(vertex);
                     dijkstra.setCurrentVertex(vertex);
                     vertex.setShortestPath(0);
-                    nodesStart++;
                 }
-                if (keyCode == KeyEvent.VK_Z && nodes <= MAX_NODES) {
+                if (keyCode == KeyEvent.VK_Z) {
                     grid[gridCase[0]][gridCase[1]] = 2;
 
                     vertex.setWeight(100);
-                    nodes++;
                 }
-                if (keyCode == KeyEvent.VK_E && nodesEnd <= MAX_NODES_END) {
+                if (keyCode == KeyEvent.VK_E) {
                     grid[gridCase[0]][gridCase[1]] = 3;
 
                     dijkstra.setEndVertex(vertex);
-
-                    nodesEnd++;
                 }
                 repaint();
             }
@@ -97,6 +89,7 @@ public class Grid extends JPanel {
 
 
     /**
+     * method to init the grid of the map
      *
      * @param dijkstra
      */
@@ -119,6 +112,9 @@ public class Grid extends JPanel {
         repaint();
     }
 
+    /**
+     * method to generate the grid + the wall (with weight 100)
+     */
     public void generateRandomGrid() {
         dijkstra = new Dijkstra();
 
@@ -130,9 +126,8 @@ public class Grid extends JPanel {
                 dijkstra.addUnvisitedVertex(newVertex);
                 id++;
 
-                // reinit grid
-
-                int randomNumber = (int) ((Math.random() * 3) + 1);
+                // 1/4 chance to have a wall
+                int randomNumber = (int) ((Math.random() * 4) + 1);
                 if (randomNumber == 2) {
                     this.grid[i][j] = randomNumber;
                     Vertex vertex = dijkstra.searchVertexFromCoordinates(i, j, dijkstra.getUnvisitedVertexes());
@@ -140,15 +135,19 @@ public class Grid extends JPanel {
                 } else {
                     this.grid[i][j] = 0;
                 }
-
-                this.nodesStart = 1;
-                this.nodes = 1;
-                this.nodesEnd = 1;
             }
         }
         repaint();
     }
 
+
+    /**
+     * method to return the case in posX, posY
+     *
+     * @param posX in pixels
+     * @param posY in pixels
+     * @return
+     */
     public int[] getGridCase(int posX, int posY) {
         int[] gridCase = new int[2];
 
@@ -158,6 +157,12 @@ public class Grid extends JPanel {
         return gridCase;
     }
 
+
+    /**
+     * Override method to paint the map and the path
+     *
+     * @param g
+     */
 
     public void paintComponent(Graphics g) {
         for (int i = 0; i < Main.NUMBER_CASE_HEIGH; i++) {
@@ -196,7 +201,7 @@ public class Grid extends JPanel {
                 }
 
 
-                int nbCase   = 4;
+                int nbCase = 4;
 
                 for (int item = 0; item < nbPaths; item++) {
                     nbCase++;
@@ -213,6 +218,11 @@ public class Grid extends JPanel {
     }
 
 
+    /**
+     * method to generate Color for all paths
+     *
+     * @return
+     */
     public Color[] generateRandomColor() {
         Color[] colors = new Color[nbPaths];
         for (int item = 0; item < nbPaths; item++) {
@@ -236,9 +246,5 @@ public class Grid extends JPanel {
 
     public int getGridValue(int posI, int posJ) {
         return this.grid[posI][posJ];
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

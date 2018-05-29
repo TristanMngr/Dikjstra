@@ -11,7 +11,6 @@ public class Dijkstra {
     private List<Vertex>       workingPath;
     private Vertex             currentVertex;
 
-    private boolean run;
     private Vertex  endVertex;
     private Vertex  startVertex;
 
@@ -21,8 +20,12 @@ public class Dijkstra {
         this.workingPaths = new ArrayList<>();
     }
 
+    /**
+     * Main method Dikjstra
+     * @param grid
+     * @param nbPaths
+     */
     public void run(Grid grid, int nbPaths) {
-        this.run = true;
         int k = 0;
 
         while (k < nbPaths) {
@@ -36,8 +39,10 @@ public class Dijkstra {
                     grid.setGrid(currentVertex.getPosI(), currentVertex.getPosJ(), 4);
                 }
 
+                // find all neighboors
                 List<Vertex> neighbourVertexes = currentVertex.searchNeighbourVertexes(this);
 
+                // calculs for all neighboors the distance from start to neighboor node
                 for (int neighbour = 0; neighbour < neighbourVertexes.size(); neighbour++) {
                     neighbourVertexes.get(neighbour).calculateNewShortestPath(currentVertex);
                 }
@@ -66,24 +71,18 @@ public class Dijkstra {
             }
 
             this.visitedVertexes = new ArrayList<>();
-
             k++;
-
         }
 
-        this.paint(grid);
-        this.run = false;
-    }
-
-    public void printCurrentPrevious() {
-        Collections.sort(this.visitedVertexes, Comparator.comparingInt(Vertex::getId));
-        for (Vertex vertex : this.visitedVertexes) {
-            System.out.println("| current => " + vertex.getId() + " previous => " + vertex.getPreviousId() + " path => " + vertex.getShortestPath() + " weight => " + vertex.getWeight() + " ");
-        }
-        System.out.println("==================");
+        this.reUpdateMapWithGoodValue(grid);
     }
 
 
+    /**
+     * method recursive to find the shortest Path in the visited vertexes
+     * @param previous
+     * @param grid
+     */
     public void findPath(Vertex previous, Grid grid) {
         if (previous.getId() == startVertex.getId()) {
             return;
@@ -99,19 +98,24 @@ public class Dijkstra {
     }
 
 
-    public void paint(Grid grid) {
-        int color = 5;
+    /**
+     * method to reUpdate the map with all workingPaths given
+     * @param grid
+     */
+    public void reUpdateMapWithGoodValue(Grid grid) {
+        int valueColorGrid = 5;
         for (List<Vertex> list : workingPaths) {
             for (Vertex vertex : list) {
-                grid.setGrid(vertex.getPosI(), vertex.getPosJ(), color);
+                grid.setGrid(vertex.getPosI(), vertex.getPosJ(), valueColorGrid);
             }
-            color ++;
+            valueColorGrid++;
         }
         grid.setGrid(startVertex.getPosI(), startVertex.getPosJ(), 1);
         grid.setGrid(endVertex.getPosI(), endVertex.getPosJ(), 3);
     }
 
 
+    //
     public Vertex searchVertexFromCoordinates(int posI, int posJ, List<Vertex> listVertexes) {
         for (int item = 0; item < listVertexes.size(); item++) {
             if (posI == listVertexes.get(item).getPosI() && posJ == listVertexes.get(item).getPosJ()) {
@@ -122,7 +126,11 @@ public class Dijkstra {
     }
 
 
-    // récupère le vertex avec le plus petit shortest path
+    /**
+     * find the shortest distance from a list given
+     * @param listVertexes
+     * @return
+     */
     public Vertex searchVertexShortestPath(List<Vertex> listVertexes) {
         int    shortestPath = 10000;
         Vertex vertex       = listVertexes.get(0);
@@ -137,6 +145,11 @@ public class Dijkstra {
         return vertex;
     }
 
+
+    /**
+     * method to swap list (unvisited => visited)
+     * @param vertex
+     */
     public void swapUnvisitedToVisitedList(Vertex vertex) {
         int    vertexId = vertex.getId();
         Vertex vertexToMove;
@@ -150,6 +163,31 @@ public class Dijkstra {
 
             }
         }
+    }
+
+    /**
+     * method to reinit all values
+     */
+    public void reinitDijkstra() {
+        this.visitedVertexes = new ArrayList<>();
+        this.unvisitedVertexes = new ArrayList<>();
+        this.copyUnvisitedVertexes = new ArrayList<>();
+        this.workingPaths = new ArrayList<>();
+        this.workingPath = new ArrayList<>();
+
+        this.startVertex = null;
+        this.endVertex = null;
+        this.currentVertex = null;
+
+    }
+
+    // TO DEBUG
+    public void printCurrentPrevious() {
+        Collections.sort(this.visitedVertexes, Comparator.comparingInt(Vertex::getId));
+        for (Vertex vertex : this.visitedVertexes) {
+            System.out.println("| current => " + vertex.getId() + " previous => " + vertex.getPreviousId() + " path => " + vertex.getShortestPath() + " weight => " + vertex.getWeight() + " ");
+        }
+        System.out.println("==================");
     }
 
     public void addUnvisitedVertex(Vertex newVertex) {
@@ -166,19 +204,6 @@ public class Dijkstra {
 
     public void setEndVertex(Vertex endVertex) {
         this.endVertex = endVertex;
-    }
-
-    public void reinitDijkstra() {
-        this.visitedVertexes = new ArrayList<>();
-        this.unvisitedVertexes = new ArrayList<>();
-        this.copyUnvisitedVertexes = new ArrayList<>();
-        this.workingPaths = new ArrayList<>();
-        this.workingPath = new ArrayList<>();
-
-        this.startVertex = null;
-        this.endVertex = null;
-        this.currentVertex = null;
-
     }
 
     public void setStartVertex(Vertex startVertex) {
