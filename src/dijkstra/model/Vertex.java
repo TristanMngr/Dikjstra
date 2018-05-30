@@ -74,7 +74,7 @@ public class Vertex {
      * method to reinit the this.node values
      */
     public void reinit() {
-        this.shortestPath = Integer.MAX_VALUE;
+        this.shortestPath = 1000000;
         this.previousId = 0;
     }
 

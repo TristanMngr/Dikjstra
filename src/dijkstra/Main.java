@@ -18,6 +18,7 @@ public class Main {
 
 
     public static void main(String[] args) {
+        System.out.println("============= DIJKSTRA ==============\n");
         Scanner scan = new Scanner(System.in);
         System.out.println("Tapez 1 pour une grande grille, 2 pour une petite");
         int nextint = scan.nextInt();
