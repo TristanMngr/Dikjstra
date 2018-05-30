@@ -3,21 +3,36 @@ package dijkstra;
 import dijkstra.controller.Grid;
 
 import javax.swing.*;
+import java.util.Scanner;
 
 
 public class Main {
     // =========
-    public final static boolean IS_BIG_SCREEN = true;
-    public final static int NB_PATHS = 10;
-    // =========
+    public static boolean IS_BIG_SCREEN;
+    public static int NB_PATHS;
 
-    public final static int NUMBER_CASE_HEIGH = sizeScreen(IS_BIG_SCREEN)[0];
-    public final static int NUMBER_CASE_WIDTH = sizeScreen(IS_BIG_SCREEN)[0];
-    public final static int GRID_HEIGH        = NUMBER_CASE_HEIGH * sizeScreen(IS_BIG_SCREEN)[1];
-    public final static int GRID_WIDTH        = NUMBER_CASE_WIDTH * sizeScreen(IS_BIG_SCREEN)[1];
+    public static int NUMBER_CASE_HEIGH;
+    public static int NUMBER_CASE_WIDTH;
+    public static int GRID_HEIGH;
+    public static int GRID_WIDTH;
 
 
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Tapez 1 pour une grande grille, 2 pour une petite");
+        int nextint = scan.nextInt();
+        if (nextint == 1)
+            IS_BIG_SCREEN = true;
+        else if (nextint == 2)
+            IS_BIG_SCREEN = false;
+
+        System.out.println("Entrez le nombre de chemins voulus");
+        NB_PATHS = scan.nextInt();
+
+        scan.close();
+
+        defineConstants();
+
         JFrame frame = new JFrame("Dijkstra");
         Grid   grid  = new Grid();
 
@@ -38,4 +53,10 @@ public class Main {
         return isBig ? big : small;
     }
 
+    public static void defineConstants(){
+        NUMBER_CASE_HEIGH = sizeScreen(IS_BIG_SCREEN)[0];
+        NUMBER_CASE_WIDTH = sizeScreen(IS_BIG_SCREEN)[0];
+        GRID_HEIGH        = NUMBER_CASE_HEIGH * sizeScreen(IS_BIG_SCREEN)[1];
+        GRID_WIDTH        = NUMBER_CASE_WIDTH * sizeScreen(IS_BIG_SCREEN)[1];
+    }
 }
