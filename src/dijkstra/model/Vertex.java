@@ -19,7 +19,7 @@ public class Vertex {
         this.posJ = posJ;
 
         this.id = id;
-        this.shortestPath = Integer.MAX_VALUE;
+        this.shortestPath = 1000000;
         this.weight = 1;
         this.previousId = 0;
     }

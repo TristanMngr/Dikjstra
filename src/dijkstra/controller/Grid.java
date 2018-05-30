@@ -5,13 +5,13 @@ import dijkstra.controller.Listener.CustomKeyListener;
 import dijkstra.controller.Listener.CustomMouseListener;
 import dijkstra.model.Dijkstra;
 import dijkstra.model.Vertex;
+import dijkstra.view.Paint;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.Random;
 
-public class Grid extends JPanel  {
+public class Grid extends JPanel {
     public  int     nbPaths = Main.NB_PATHS;
     private int[][] grid    = new int[Main.NUMBER_CASE_HEIGH][Main.NUMBER_CASE_WIDTH];
     private String message;
@@ -19,6 +19,8 @@ public class Grid extends JPanel  {
     private int    sizeCaseHeigh, sizeCaseWidth;
     private Dijkstra dijkstra;
     private Color    randomColor[];
+
+    private Paint paintComponent;
 
     private boolean  isStartNodeChoosen = false;
     private boolean  isEndNodeChoosen = false;
@@ -35,6 +37,8 @@ public class Grid extends JPanel  {
 
         CustomKeyListener keyListener = new CustomKeyListener(this);
         keyListener.addKeyListener();
+
+        paintComponent = new Paint(this);
 
         
         this.sizeCaseHeigh = Main.GRID_HEIGH / Main.NUMBER_CASE_HEIGH;
@@ -84,7 +88,7 @@ public class Grid extends JPanel  {
 
 
     /**
-     * method to generate the grid + the wall (with weight 100)
+     * method to generate the grid + the wall (with weight INFINIT)
      */
     public void generateRandomGrid() {
         dijkstra = new Dijkstra();
@@ -102,7 +106,7 @@ public class Grid extends JPanel  {
                 if (randomNumber == 2) {
                     this.grid[i][j] = randomNumber;
                     Vertex vertex = dijkstra.searchVertexFromCoordinates(i, j, dijkstra.getUnvisitedVertexes());
-                    vertex.setWeight(100);
+                    vertex.setWeight(1000000);
                 } else {
                     this.grid[i][j] = 0;
                 }
@@ -129,58 +133,12 @@ public class Grid extends JPanel  {
     }
 
 
-
+    /**
+     * method to call the paint method from Paint
+     * @param g
+     */
     public void paintComponent(Graphics g) {
-        for (int i = 0; i < Main.NUMBER_CASE_HEIGH; i++) {
-            for (int j = 0; j < Main.NUMBER_CASE_WIDTH; j++) {
-                g.setColor(Color.BLACK);
-                g.drawRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-
-                // GREY
-                if (grid[i][j] == 0) {
-                    g.setColor(new Color(240, 240, 240));
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
-                // GREEN
-                if (grid[i][j] == 1) {
-                    g.setColor(new Color(0, 100, 0));
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
-                // RED
-                if (grid[i][j] == 2) {
-                    g.setColor(new Color(170, 0, 0));
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
-                // BLUE
-                if (grid[i][j] == 3) {
-                    g.setColor(new Color(0, 100, 150));
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
-                // DARK GREY
-                if (grid[i][j] == 4) {
-                    g.setColor(Color.DARK_GRAY);
-                    g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                }
-
-                int nbCase = 4;
-
-                for (int item = 0; item < nbPaths; item++) {
-                    nbCase++;
-
-                    if (grid[i][j] == nbCase) {
-                        g.setColor(randomColor[item]);
-                        g.fillRect(j * this.sizeCaseWidth, i * this.sizeCaseHeigh, this.sizeCaseHeigh, this.sizeCaseHeigh);
-                    }
-                }
-                g.setColor(Color.BLACK);
-                g.setFont(new Font("Sans Serif", Font.BOLD, 12));
-                g.drawString(message, 25, 25);
-            }
-        }
+        paintComponent.paintGrid(g);
     }
 
 

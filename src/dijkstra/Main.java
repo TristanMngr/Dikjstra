@@ -1,7 +1,6 @@
 package dijkstra;
 
 import dijkstra.controller.Grid;
-import dijkstra.view.PaintComponent;
 
 import javax.swing.*;
 import java.util.Scanner;
@@ -11,7 +10,6 @@ public class Main {
     // =========
     public static boolean IS_BIG_SCREEN;
     public static int NB_PATHS;
-    // =========
 
     public static int NUMBER_CASE_HEIGH;
     public static int NUMBER_CASE_WIDTH;
