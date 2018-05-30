@@ -74,6 +74,10 @@ public class Dijkstra {
                 }
             }
 
+            for (Vertex visitedVertexe : this.workingPath) {
+                visitedVertexe.setWeight(visitedVertexe.getWeight() + 1);
+            }
+
             // on reload la listes des visited vertex à zero
 
             this.visitedVertexes = new ArrayList<>();
@@ -142,7 +146,7 @@ public class Dijkstra {
         int    shortestPath = 10000;
         Vertex vertex       = listVertexes.get(0);
 
-        Collections.shuffle(listVertexes);
+        //Collections.shuffle(listVertexes);
         for (int item = 0; item < listVertexes.size(); item++) {
             if (listVertexes.get(item).getShortestPath() < shortestPath) {
                 vertex = listVertexes.get(item);
