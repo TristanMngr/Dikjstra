@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class Main {
     // =========
-    public final static boolean IS_BIG_SCREEN = false;
-    public final static int NB_PATHS = 1;
+    public final static boolean IS_BIG_SCREEN = true;
+    public final static int NB_PATHS = 10;
     // =========
 
     public final static int NUMBER_CASE_HEIGH = sizeScreen(IS_BIG_SCREEN)[0];

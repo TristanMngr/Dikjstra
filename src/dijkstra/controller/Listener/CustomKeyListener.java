@@ -30,7 +30,6 @@ public class CustomKeyListener implements KeyListener {
             grid.initGrid(grid.getDijkstra());
             grid.setMessage(grid.getStartMessage());
         } else if (grid.getKeyCode() == KeyEvent.VK_S) {
-
             if (grid.isStartNodeChoosen() && grid.isEndNodeChoosen()) {
                 grid.runDjikstra(grid.getDijkstra());
             } else {

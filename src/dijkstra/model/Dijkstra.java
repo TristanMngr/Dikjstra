@@ -55,8 +55,8 @@ public class Dijkstra {
             }
 
             //DEBUG
-            /*System.out.println("Current/Previous :");
-            printCurrentPrevious();*/
+            //System.out.println("Current/Previous :");
+            //printCurrentPrevious();
 
             // reset unvisited node
             this.unvisitedVertexes = new ArrayList<>();
@@ -67,6 +67,9 @@ public class Dijkstra {
             findPath(endVertex, grid);
             this.workingPaths.add(workingPath);
 
+            // increase weight of workingPath's vertexes
+            increaseWeight();
+
             // reinit shortest path and previous node
             for (Vertex vertexCopy : this.unvisitedVertexes) {
                 if (!vertexCopy.equals(startVertex)) {
@@ -75,12 +78,21 @@ public class Dijkstra {
             }
 
             // on reload la listes des visited vertex à zero
-
             this.visitedVertexes = new ArrayList<>();
             k++;
         }
 
         this.reUpdateMapWithGoodValue(grid);
+    }
+
+
+    /**
+     * Increase weight of workingPath's vertexes
+     */
+    public void increaseWeight() {
+        for (Vertex workingVertexes : this.workingPath) {
+            workingVertexes.setWeight(workingVertexes.getWeight() + 1);
+        }
     }
 
 
@@ -142,7 +154,6 @@ public class Dijkstra {
         int    shortestPath = 10000;
         Vertex vertex       = listVertexes.get(0);
 
-        Collections.shuffle(listVertexes);
         for (int item = 0; item < listVertexes.size(); item++) {
             if (listVertexes.get(item).getShortestPath() < shortestPath) {
                 vertex = listVertexes.get(item);

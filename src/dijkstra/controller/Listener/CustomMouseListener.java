@@ -28,7 +28,7 @@ public class CustomMouseListener implements MouseListener{
         int    gridCase[] = grid.getGridCase(e.getY(), e.getX());
         Vertex vertex     = grid.getDijkstra().searchVertexFromCoordinates(gridCase[0], gridCase[1], grid.getDijkstra().getUnvisitedVertexes());
         if (grid.getKeyCode() == KeyEvent.VK_A) {
-            if (!grid.isEndNodeChoosen()) {
+            if (!grid.isStartNodeChoosen()) {
                 grid.getGrid()[gridCase[0]][gridCase[1]] = 1;
 
                 grid.getDijkstra().setStartVertex(vertex);
@@ -41,7 +41,7 @@ public class CustomMouseListener implements MouseListener{
         }
         if (grid.getKeyCode() == KeyEvent.VK_Z) {
             grid.getGrid()[gridCase[0]][gridCase[1]] = 2;
-            vertex.setWeight(100);
+            vertex.setWeight(1000000);
         }
         if (grid.getKeyCode() == KeyEvent.VK_E) {
             if (!grid.isEndNodeChoosen()) {
