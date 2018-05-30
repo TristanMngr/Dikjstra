@@ -88,7 +88,7 @@ public class Grid extends JPanel {
 
 
     /**
-     * method to generate the grid + the wall (with weight 100)
+     * method to generate the grid + the wall (with weight INFINIT)
      */
     public void generateRandomGrid() {
         dijkstra = new Dijkstra();
@@ -106,7 +106,7 @@ public class Grid extends JPanel {
                 if (randomNumber == 2) {
                     this.grid[i][j] = randomNumber;
                     Vertex vertex = dijkstra.searchVertexFromCoordinates(i, j, dijkstra.getUnvisitedVertexes());
-                    vertex.setWeight(100);
+                    vertex.setWeight(1000000);
                 } else {
                     this.grid[i][j] = 0;
                 }
