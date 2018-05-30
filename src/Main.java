@@ -28,8 +28,8 @@ public class Main {
     }
 
     public static int[] sizeScreen(boolean isBig) {
-        int[] big = new int[] {60, 10};
-        int[] small = new int[] {10, 60};
+        int[] big = new int[] {60, 12};
+        int[] small = new int[] {12, 60};
 
         return isBig ? big : small;
     }

@@ -13,7 +13,6 @@ public class Dijkstra {
 
     private Vertex  endVertex;
     private Vertex  startVertex;
-    private boolean findPath;
 
     public Dijkstra() {
         this.visitedVertexes = new ArrayList<>();

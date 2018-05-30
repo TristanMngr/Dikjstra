@@ -12,6 +12,11 @@ public class Grid extends JPanel {
     private Dijkstra dijkstra;
     private Color    randomColor[];
 
+    private boolean  isStartNodeChoosen = false;
+    private boolean  isEndNodeChoosen = false;
+
+    private String startMessage = "A: start node / Z: wall node / E: end node / R: Reload grid / G: Generate paths / C: Change colors paths";
+
 
     /**
      * Constructor to init Listener
@@ -21,7 +26,7 @@ public class Grid extends JPanel {
         this.sizeCaseWidth = Main.GRID_WIDTH / Main.NUMBER_CASE_WIDTH;
         this.randomColor = generateRandomColor();
 
-        this.message = "A: start; Z: node; E: end; R: Reload; G: Generate";
+        this.message = startMessage;
 
         this.dijkstra = new Dijkstra();
         initGrid(dijkstra);
@@ -36,21 +41,30 @@ public class Grid extends JPanel {
                 int    gridCase[] = getGridCase(e.getY(), e.getX());
                 Vertex vertex     = dijkstra.searchVertexFromCoordinates(gridCase[0], gridCase[1], dijkstra.getUnvisitedVertexes());
                 if (keyCode == KeyEvent.VK_A) {
-                    grid[gridCase[0]][gridCase[1]] = 1;
+                    if (!isStartNodeChoosen) {
+                        grid[gridCase[0]][gridCase[1]] = 1;
 
-                    dijkstra.setStartVertex(vertex);
-                    dijkstra.setCurrentVertex(vertex);
-                    vertex.setShortestPath(0);
+                        dijkstra.setStartVertex(vertex);
+                        dijkstra.setCurrentVertex(vertex);
+                        vertex.setShortestPath(0);
+                        isStartNodeChoosen = true;
+                    } else {
+                        message = "Start node already present";
+                    }
                 }
                 if (keyCode == KeyEvent.VK_Z) {
                     grid[gridCase[0]][gridCase[1]] = 2;
-
                     vertex.setWeight(100);
                 }
                 if (keyCode == KeyEvent.VK_E) {
-                    grid[gridCase[0]][gridCase[1]] = 3;
+                    if (!isEndNodeChoosen) {
+                        grid[gridCase[0]][gridCase[1]] = 3;
 
-                    dijkstra.setEndVertex(vertex);
+                        dijkstra.setEndVertex(vertex);
+                        isEndNodeChoosen = true;
+                    } else {
+                        message = "End node already present";
+                    }
                 }
                 repaint();
             }
@@ -72,15 +86,20 @@ public class Grid extends JPanel {
                     message = "Choose End";
                 } else if (keyCode == KeyEvent.VK_R) {
                     initGrid(dijkstra);
-                    message = "Grid reinit";
+                    message = startMessage;
                 } else if (keyCode == KeyEvent.VK_S) {
-                    runDjikstra(dijkstra);
+                    if (isStartNodeChoosen && isEndNodeChoosen) {
+                        runDjikstra(dijkstra);
+                    } else {
+                        message = "Please chose a Start(A key) and End(E key) Node";
+                    }
                 } else if (keyCode == KeyEvent.VK_G) {
                     generateRandomGrid();
+                    message = startMessage;
                 } else if (keyCode == KeyEvent.VK_C) {
                     randomColor = generateRandomColor();
                 }
-                
+
                 repaint();
             }
         });
@@ -101,6 +120,8 @@ public class Grid extends JPanel {
      */
     public void initGrid(Dijkstra dijkstra) {
         dijkstra.reinitDijkstra();
+        isStartNodeChoosen = false;
+        isEndNodeChoosen = false;
 
         int id = 1;
         for (int i = 0; i < Main.NUMBER_CASE_HEIGH; i++) {
@@ -217,6 +238,7 @@ public class Grid extends JPanel {
                     }
                 }
                 g.setColor(Color.BLACK);
+                g.setFont(new Font("Sans Serif", Font.BOLD, 12));
                 g.drawString(message, 25, 25);
             }
         }
