@@ -1,7 +1,6 @@
 package dijkstra;
 
 import dijkstra.controller.Grid;
-import dijkstra.view.PaintComponent;
 
 import javax.swing.*;
 
