@@ -12,7 +12,6 @@ public class PaintComponent extends JPanel {
 
     public PaintComponent(Grid grid) {
         this.grid = grid;
-        setFocusable(true);
     }
 
     /**

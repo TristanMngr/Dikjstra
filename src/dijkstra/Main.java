@@ -22,8 +22,6 @@ public class Main {
         JFrame frame = new JFrame("Dijkstra");
         Grid   grid  = new Grid();
 
-        PaintComponent paintComponent = new PaintComponent(grid);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(GRID_WIDTH, GRID_HEIGH + 22);
         frame.setResizable(false);
