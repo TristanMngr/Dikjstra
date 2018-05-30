@@ -2,25 +2,21 @@ package dijkstra.view;
 
 import dijkstra.Main;
 import dijkstra.controller.Grid;
-
-import javax.swing.*;
 import java.awt.*;
 
-public class PaintComponent extends JPanel {
+public class Paint {
     Grid grid;
 
 
-    public PaintComponent(Grid grid) {
+    public Paint(Grid grid) {
         this.grid = grid;
     }
 
     /**
      * Override method to paint the map and the path
-     *
      * @param g
      */
-    @Override
-    protected void paintComponent(Graphics g) {
+    public void paintGrid(Graphics g) {
         for (int i = 0; i < Main.NUMBER_CASE_HEIGH; i++) {
             for (int j = 0; j < Main.NUMBER_CASE_WIDTH; j++) {
                 g.setColor(Color.BLACK);
