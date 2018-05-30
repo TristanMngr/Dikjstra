@@ -4,12 +4,13 @@ import dijkstra.controller.Grid;
 import dijkstra.view.PaintComponent;
 
 import javax.swing.*;
+import java.util.Scanner;
 
 
 public class Main {
     // =========
     public final static boolean IS_BIG_SCREEN = false;
-    public final static int NB_PATHS = 1;
+    public static int NB_PATHS = -1;
     // =========
 
     public final static int NUMBER_CASE_HEIGH = sizeScreen(IS_BIG_SCREEN)[0];
@@ -19,6 +20,13 @@ public class Main {
 
 
     public static void main(String[] args) {
+
+        while (NB_PATHS == -1){
+            System.out.println("Entrez le nombre de chemins voulus");
+            Scanner scan = new Scanner(System.in);
+            NB_PATHS = scan.nextInt();
+        }
+
         JFrame frame = new JFrame("Dijkstra");
         Grid   grid  = new Grid();
 
