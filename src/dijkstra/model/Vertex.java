@@ -1,3 +1,7 @@
+package dijkstra.model;
+
+import dijkstra.Main;
+
 import java.util.ArrayList;
 import java.util.List;
 

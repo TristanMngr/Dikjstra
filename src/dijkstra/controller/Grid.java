@@ -1,9 +1,15 @@
+package dijkstra.controller;
+
+import dijkstra.Main;
+import dijkstra.model.Dijkstra;
+import dijkstra.model.Vertex;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class Grid extends JPanel {
+public class Grid extends JPanel  {
     public  int     nbPaths = Main.NB_PATHS;
     private int[][] grid    = new int[Main.NUMBER_CASE_HEIGH][Main.NUMBER_CASE_WIDTH];
     private String message;
@@ -22,6 +28,9 @@ public class Grid extends JPanel {
      * Constructor to init Listener
      */
     public Grid() {
+        CustomMouseListener customMouseListener = new CustomMouseListener(this);
+        customMouseListener.addMouseListener();
+        
         this.sizeCaseHeigh = Main.GRID_HEIGH / Main.NUMBER_CASE_HEIGH;
         this.sizeCaseWidth = Main.GRID_WIDTH / Main.NUMBER_CASE_WIDTH;
         this.randomColor = generateRandomColor();
@@ -38,35 +47,7 @@ public class Grid extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int    gridCase[] = getGridCase(e.getY(), e.getX());
-                Vertex vertex     = dijkstra.searchVertexFromCoordinates(gridCase[0], gridCase[1], dijkstra.getUnvisitedVertexes());
-                if (keyCode == KeyEvent.VK_A) {
-                    if (!isStartNodeChoosen) {
-                        grid[gridCase[0]][gridCase[1]] = 1;
 
-                        dijkstra.setStartVertex(vertex);
-                        dijkstra.setCurrentVertex(vertex);
-                        vertex.setShortestPath(0);
-                        isStartNodeChoosen = true;
-                    } else {
-                        message = "Start node already present";
-                    }
-                }
-                if (keyCode == KeyEvent.VK_Z) {
-                    grid[gridCase[0]][gridCase[1]] = 2;
-                    vertex.setWeight(100);
-                }
-                if (keyCode == KeyEvent.VK_E) {
-                    if (!isEndNodeChoosen) {
-                        grid[gridCase[0]][gridCase[1]] = 3;
-
-                        dijkstra.setEndVertex(vertex);
-                        isEndNodeChoosen = true;
-                    } else {
-                        message = "End node already present";
-                    }
-                }
-                repaint();
             }
         });
 
@@ -273,5 +254,93 @@ public class Grid extends JPanel {
 
     public int getGridValue(int posI, int posJ) {
         return this.grid[posI][posJ];
+    }
+
+    public int getNbPaths() {
+        return nbPaths;
+    }
+
+    public void setNbPaths(int nbPaths) {
+        this.nbPaths = nbPaths;
+    }
+
+    public int[][] getGrid() {
+        return grid;
+    }
+
+    public void setGrid(int[][] grid) {
+        this.grid = grid;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getKeyCode() {
+        return keyCode;
+    }
+
+    public void setKeyCode(int keyCode) {
+        this.keyCode = keyCode;
+    }
+
+    public int getSizeCaseHeigh() {
+        return sizeCaseHeigh;
+    }
+
+    public void setSizeCaseHeigh(int sizeCaseHeigh) {
+        this.sizeCaseHeigh = sizeCaseHeigh;
+    }
+
+    public int getSizeCaseWidth() {
+        return sizeCaseWidth;
+    }
+
+    public void setSizeCaseWidth(int sizeCaseWidth) {
+        this.sizeCaseWidth = sizeCaseWidth;
+    }
+
+    public Dijkstra getDijkstra() {
+        return dijkstra;
+    }
+
+    public void setDijkstra(Dijkstra dijkstra) {
+        this.dijkstra = dijkstra;
+    }
+
+    public Color[] getRandomColor() {
+        return randomColor;
+    }
+
+    public void setRandomColor(Color[] randomColor) {
+        this.randomColor = randomColor;
+    }
+
+    public boolean isStartNodeChoosen() {
+        return isStartNodeChoosen;
+    }
+
+    public void setStartNodeChoosen(boolean startNodeChoosen) {
+        isStartNodeChoosen = startNodeChoosen;
+    }
+
+    public boolean isEndNodeChoosen() {
+        return isEndNodeChoosen;
+    }
+
+    public void setEndNodeChoosen(boolean endNodeChoosen) {
+        isEndNodeChoosen = endNodeChoosen;
+    }
+
+    public String getStartMessage() {
+        return startMessage;
+    }
+
+    public void setStartMessage(String startMessage) {
+        this.startMessage = startMessage;
     }
 }

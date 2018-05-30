@@ -1,3 +1,7 @@
+package dijkstra;
+
+import dijkstra.controller.Grid;
+
 import javax.swing.*;
 
 

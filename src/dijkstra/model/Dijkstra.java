@@ -1,3 +1,7 @@
+package dijkstra.model;
+
+import dijkstra.controller.Grid;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,8 +15,8 @@ public class Dijkstra {
     private List<Vertex>       workingPath;
     private Vertex             currentVertex;
 
-    private Vertex  endVertex;
-    private Vertex  startVertex;
+    private Vertex endVertex;
+    private Vertex startVertex;
 
     public Dijkstra() {
         this.visitedVertexes = new ArrayList<>();
@@ -21,7 +25,7 @@ public class Dijkstra {
     }
 
     /**
-     * Main method Dikjstra
+     * dijkstra.Main method Dikjstra
      * @param grid
      * @param nbPaths
      */
