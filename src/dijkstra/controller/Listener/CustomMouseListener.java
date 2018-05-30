@@ -1,5 +1,6 @@
-package dijkstra.controller;
+package dijkstra.controller.Listener;
 
+import dijkstra.controller.Grid;
 import dijkstra.model.Vertex;
 
 import java.awt.event.KeyEvent;

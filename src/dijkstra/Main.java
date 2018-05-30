@@ -1,6 +1,7 @@
 package dijkstra;
 
 import dijkstra.controller.Grid;
+import dijkstra.view.PaintComponent;
 
 import javax.swing.*;
 
@@ -20,6 +21,8 @@ public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Dijkstra");
         Grid   grid  = new Grid();
+
+        PaintComponent paintComponent = new PaintComponent(grid);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(GRID_WIDTH, GRID_HEIGH + 22);
